@@ -3,8 +3,8 @@ import { Modal as ElModal, Button, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { actions } from '../slices/index.js';
-import { useApi } from '../hooks/index.jsx';
+import { actions } from '../../slices/index.js';
+import { useApi } from '../../hooks/index.jsx';
 
 const getChannelsName = ({ chatChannels: { channels } }) => channels.map(({ name }) => name);
 
@@ -18,6 +18,7 @@ const AddChannel = ({ handleClose }) => {
     inputRef.current?.focus();
   }, []);
 
+  //need modified validation
   const validationSchema = yup.object().shape({
     name: yup
       .string()
