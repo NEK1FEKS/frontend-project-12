@@ -48,6 +48,9 @@ const AddChannel = ({ handleClose }) => {
 
   return (
     <>
+      <ElModal.Header closeButton>
+        <ElModal.Title>Добавить канал</ElModal.Title>
+      </ElModal.Header>
       <ElModal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
