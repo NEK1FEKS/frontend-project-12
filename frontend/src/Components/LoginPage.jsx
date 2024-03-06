@@ -4,7 +4,7 @@ import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import useAuth from '../hooks';
+import { useAuth } from '../hooks';
 import routes from '../hooks/routes';
 
 const schema = Yup.object().shape({
@@ -13,15 +13,13 @@ const schema = Yup.object().shape({
 });
 
 const LoginPage = () => {
-  const auth = useAuth();
+  const { logIn } = useAuth();
   const [authFalied, setAuthFailed] = useState(false);
   const inputRef = useRef();
   const navigate = useNavigate();
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-  console.log(authFalied);
-
   const formik = useFormik({
     validationSchema: schema,
     initialValues: {
@@ -33,8 +31,7 @@ const LoginPage = () => {
 
       axios.post(routes.loginPath(), { username, password })
         .then(({ data }) => {
-          localStorage.setItem('userId', JSON.stringify(data));
-          auth.logIn();
+          logIn(data);
           navigate('/');
         })
         .catch((err) => {
@@ -48,8 +45,6 @@ const LoginPage = () => {
         });
     },
   });
-
-  console.log(formik.errors);
 
   return (
     <div className="d-flex flex-column h-100">

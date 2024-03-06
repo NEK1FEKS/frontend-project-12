@@ -3,60 +3,37 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation, } from 'react-rout
 import LoginPage from './LoginPage.jsx';
 import Page404 from './Page404.jsx';
 import MainPage from './MainPage.jsx';
-import AuthContext from '../contexts/index.jsx';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import Navbar from './Navbar.jsx';
-
-const AuthProvider = ({ children }) => {
-  const checkLogged = Boolean(localStorage.getItem('userId'));
-  const [loggedIn, setLoggedIn] = useState(checkLogged);
-
-  const logIn = () => setLoggedIn(true);
-  const logOut = () => {
-    localStorage.removeItem('userId');
-    setLoggedIn(false);
-  };
-
-  return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+import ProviderAuth from './ProviderAuth.jsx';
 
 const CheckLogged = ({ children }) => {
-  const { loggedIn } = useAuth();
+  const auth = useAuth();
   const location = useLocation();
 
-  return (
-    loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
-  );
+  return auth.user ? children : <Navigate to="/login" state={{ from: location }} />;
 };
 
 const App = () => (
-  <AuthProvider>
-    <div className="h-100">
-      <div className="h-100" id="chat">
-        <div className="d-flex flex-column h-100">
-          <Navbar />
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="/"
-                element={(
-                  <CheckLogged>
-                    <MainPage />
-                  </CheckLogged>
-                )}
-              />
-              <Route path="login" element={<LoginPage />} />
-              <Route path="*" element={<Page404 />} />
-            </Routes>
-          </BrowserRouter>
-        </div>
-      </div>
+  <ProviderAuth>
+    <div className="d-flex flex-column h-100">
+      <Navbar />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={(
+              <CheckLogged>
+                <MainPage />
+              </CheckLogged>
+            )}
+          />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      </BrowserRouter>
     </div>
-  </AuthProvider>
+  </ProviderAuth>
 );
 
 export default App;
