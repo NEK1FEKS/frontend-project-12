@@ -6,6 +6,7 @@ import MainPage from './MainPage.jsx';
 import { useAuth } from '../hooks/index.jsx';
 import Navbar from './Navbar.jsx';
 import ProviderAuth from './ProviderAuth.jsx';
+import SignupPage from './SignupPage.jsx';
 
 const CheckLogged = ({ children }) => {
   const auth = useAuth();
@@ -29,6 +30,7 @@ const App = () => (
             )}
           />
           <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
