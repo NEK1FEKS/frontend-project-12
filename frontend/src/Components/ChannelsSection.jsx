@@ -2,8 +2,10 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../slices/index.js';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const Channel = (props) => {
+  const { t } = useTranslation();
   const {
     channel,
     isCurrent,
@@ -27,19 +29,18 @@ const Channel = (props) => {
           {channel.name}
         </Button>
         <Dropdown.Toggle split variant={styles} className="flex-grow-0">
-          <span className="visually-hidden">Меню</span>
+        <span className="visually-hidden">{t('channels.menu')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => handleRemoveChannel(channel.id)}>Удалить</Dropdown.Item>
-          <Dropdown.Item onClick={() => handleRenameChannel(channel.id)}>
-            Переименовать
-          </Dropdown.Item>
+          <Dropdown.Item onClick={() => handleRemoveChannel(channel.id)}>{t('channels.remove')}</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleRenameChannel(channel.id)}>{t('channels.rename')}</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </li>
   );
 };
 const ChannelsSection = () => {
+  const { t } = useTranslation();
   const { channels, currentChannelId } = useSelector((state) => state.chatChannels);
   const dispatch = useDispatch();
   const handleSelectChannel = (channelId) => {
@@ -59,7 +60,7 @@ const ChannelsSection = () => {
   return (
     <>
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-        <b>Каналы</b>
+        <b>{t('channels.channels')}</b>
         <Button
           type="button"
           variant="group-vertical"

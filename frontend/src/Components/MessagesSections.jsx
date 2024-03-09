@@ -4,8 +4,10 @@ import * as yup from 'yup';
 import React, { useRef, useEffect } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useAuth, useApi } from '../hooks/index.jsx';
+import { useTranslation } from 'react-i18next';
 
 const MessageForm = ({ channel }) => {
+  const { t } = useTranslation();
   const api = useApi();
   const { user } = useAuth();
   const { username } = user;
@@ -54,10 +56,10 @@ const MessageForm = ({ channel }) => {
           onChange={formik.handleChange}
           name="body"
           disabled={formik.isSubmitting}
-          aria-label="Новое сообщение"
+          aria-label={t('chat.newMessage')}
           value={formik.values.body}
           className="border-0 p-0 ps-2"
-          placeholder="Введите сообщение..."
+          placeholder={t('chat.placeholder')}
         />
         <Button type="submit" variant="group-vertical" disabled={isInvalid}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-square" viewBox="0 0 16 16">
@@ -69,7 +71,7 @@ const MessageForm = ({ channel }) => {
               0-.708.708L10.293 7.5H4.5z"
             />
           </svg>
-          <span className="visually-hidden">Отправить</span>
+          <span className="visually-hidden">{t('chat.send')}</span>
         </Button>
       </InputGroup>
     </Form>
@@ -77,6 +79,7 @@ const MessageForm = ({ channel }) => {
 };
 
 const MessagesSection = () => {
+  const { t } = useTranslation();
   const currentChannel = useSelector((state) => {
     const { chatChannels: { channels, currentChannelId } } = state;
     return channels.find((channel) => channel.id === currentChannelId);
@@ -93,11 +96,11 @@ const MessagesSection = () => {
       <div className="bg-light mb-4 p-3 shadow-sm small">
         <p className="m-0">
           <b>
-            {`# ${currentChannel?.name}`}
+          {`# ${currentChannel?.name ?? t('channels.creatingChannel')}`}
           </b>
         </p>
         <span className="text-muted">
-          {`${channelMessages.length} coобщений`}
+        {`${channelMessages.length} ${t('chat.messageCount', { count: channelMessages.length })}`}
         </span>
       </div>
       <div id="message-box" className="chat-messages overflow-auto px-5 ">

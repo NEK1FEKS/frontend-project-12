@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import routes from '../hooks/routes';
 import ChannelsSection from './ChannelsSection.jsx';
@@ -8,6 +7,8 @@ import MessagesSection from './MessagesSections.jsx';
 import { actions as ChannelsActions } from '../slices/channelsSlice.jsx';
 import Modal from './modals/Modal.jsx';
 import { useAuth } from '../hooks/index.jsx';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const getAuthHeader = () => {
   const userToken = JSON.parse(localStorage.getItem('user'));
@@ -18,17 +19,30 @@ const getAuthHeader = () => {
 };
 
 const MainPage = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchChannels = async () => {
-      const { data } = await axios.get(routes.usersPath(), { headers: getAuthHeader() });
-      dispatch(ChannelsActions.setInitialState(data));
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(routes.usersPath(), { headers: getAuthHeader() });
+        dispatch(ChannelsActions.setInitialState(data));
+      } catch (error) {
+        if (!error.isAxiosError) {
+          throw new Error(t('errors.unknown'));
+        }
+        if (error.response?.status === 401) {
+          navigate(routes.loginPagePath());
+        } else {
+          throw new Error(t('errors.network'));
+        }
+      }
     };
 
-    fetchChannels();
-  }, [dispatch, auth]);
+    fetchData();
+  }, [dispatch, auth, navigate, t]);
 
   return (
     <>

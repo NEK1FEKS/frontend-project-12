@@ -5,10 +5,12 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { actions } from '../../slices/index.js';
 import { useApi } from '../../hooks/index.jsx';
+import { useTranslation } from 'react-i18next';
 
 const getChannelsName = ({ chatChannels: { channels } }) => channels.map(({ name }) => name);
 
 const AddChannel = ({ handleClose }) => {
+  const { t } = useTranslation();
   const dispath = useDispatch();
   const channels = useSelector(getChannelsName);
   const api = useApi();
@@ -18,7 +20,6 @@ const AddChannel = ({ handleClose }) => {
     inputRef.current?.focus();
   }, []);
 
-  //need modified validation
   const validationSchema = yup.object().shape({
     name: yup
       .string()
@@ -49,7 +50,7 @@ const AddChannel = ({ handleClose }) => {
   return (
     <>
       <ElModal.Header closeButton>
-        <ElModal.Title>Добавить канал</ElModal.Title>
+      <ElModal.Title>{t('modals.add')}</ElModal.Title>
       </ElModal.Header>
       <ElModal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -70,13 +71,13 @@ const AddChannel = ({ handleClose }) => {
                 type="button"
                 onClick={handleClose}
               >
-                Отмена
+                {t('modals.cancel')}
               </Button>
               <Button
                 variant="primary"
                 type="submit"
               >
-                Принять
+                {t('modals.submit')}
               </Button>
             </div>
           </Form.Group>

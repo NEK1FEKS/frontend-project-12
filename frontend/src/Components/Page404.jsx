@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 const Page404 = () => {
+  const { t } = useTranslation();
   return (
-    <h1>Страница не найдена</h1>
+    <h1>{t('notFound.message')}</h1>
   );
 }
 
