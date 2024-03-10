@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useAuth, useApi } from '../hooks/index.jsx';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 
 const MessageForm = ({ channel }) => {
   const { t } = useTranslation();
@@ -108,7 +109,7 @@ const MessagesSection = () => {
           <div key={id} className="text-break mb-2">
             <b>{username}</b>
             {': '}
-            {body}
+            {filter.clean(body)}
           </div>
         ))}
       </div>
