@@ -7,6 +7,7 @@ import { useAuth } from '../hooks/index.jsx';
 import Navbar from './Navbar.jsx';
 import ProviderAuth from './ProviderAuth.jsx';
 import SignupPage from './SignupPage.jsx';
+import { ToastContainer as ToastDiv } from 'react-toastify';
 
 const CheckLogged = ({ children }) => {
   const auth = useAuth();
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="signup" element={<SignupPage />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
+        <ToastDiv />
       </BrowserRouter>
     </div>
   </ProviderAuth>

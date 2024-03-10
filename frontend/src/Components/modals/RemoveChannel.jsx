@@ -3,6 +3,7 @@ import { Modal as ElModal, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useApi } from '../../hooks/index.jsx';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const RemoveChannel = ({ handleClose }) => {
   const { t } = useTranslation();
@@ -12,6 +13,7 @@ const RemoveChannel = ({ handleClose }) => {
   const handleRemove = async () => {
     try {
       await api.removeChannel({ id: channelId });
+      toast.success(t('channels.removed'));
       handleClose();
     } catch (error) {
       console.error(error);

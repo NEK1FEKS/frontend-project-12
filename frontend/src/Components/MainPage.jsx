@@ -9,6 +9,7 @@ import Modal from './modals/Modal.jsx';
 import { useAuth } from '../hooks/index.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const getAuthHeader = () => {
   const userToken = JSON.parse(localStorage.getItem('user'));
@@ -31,12 +32,13 @@ const MainPage = () => {
         dispatch(ChannelsActions.setInitialState(data));
       } catch (error) {
         if (!error.isAxiosError) {
-          throw new Error(t('errors.unknown'));
+          toast.error(t('errors.unknown'));
+          return;
         }
         if (error.response?.status === 401) {
           navigate(routes.loginPagePath());
         } else {
-          throw new Error(t('errors.network'));
+          toast.error(t('errors.network'));
         }
       }
     };

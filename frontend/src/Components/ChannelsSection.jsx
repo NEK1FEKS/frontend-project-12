@@ -17,28 +17,44 @@ const Channel = (props) => {
 
   return (
     <li className="nav-item w-100">
-      <Dropdown as={ButtonGroup} className="d-flex">
-        <Button
-          type="button"
-          variant={styles}
-          key={channel.id}
-          className="w-100 rounded-0 text-start text-truncate"
-          onClick={() => handleSelectChannel(channel.id)}
-        >
-          <span className="me-1">#</span>
-          {channel.name}
-        </Button>
-        <Dropdown.Toggle split variant={styles} className="flex-grow-0">
-        <span className="visually-hidden">{t('channels.menu')}</span>
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={() => handleRemoveChannel(channel.id)}>{t('channels.remove')}</Dropdown.Item>
-          <Dropdown.Item onClick={() => handleRenameChannel(channel.id)}>{t('channels.rename')}</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+      {channel.removable
+        ? (
+          <Dropdown as={ButtonGroup} className="d-flex">
+            <Button
+              type="button"
+              variant={styles}
+              key={channel.id}
+              className="w-100 rounded-0 text-start text-truncate"
+              onClick={() => handleSelectChannel(channel.id)}
+            >
+              <span className="me-1">#</span>
+              {channel.name}
+            </Button>
+            <Dropdown.Toggle split variant={styles} className="flex-grow-0">
+              <span className="visually-hidden">{t('channels.menu')}</span>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => handleRemoveChannel(channel.id)}>{t('channels.remove')}</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleRenameChannel(channel.id)}>{t('channels.rename')}</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        )
+        : (
+          <Button
+            type="button"
+            variant={styles}
+            key={channel.id}
+            className="w-100 rounded-0 text-start text-truncate"
+            onClick={() => handleSelectChannel(channel.id)}
+          >
+            <span className="me-1">#</span>
+            {channel.name}
+          </Button>
+        )}
     </li>
   );
 };
+
 const ChannelsSection = () => {
   const { t } = useTranslation();
   const { channels, currentChannelId } = useSelector((state) => state.chatChannels);

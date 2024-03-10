@@ -28,6 +28,7 @@ export default {
       submit: 'Войти',
       notAUser: 'Нет аккаунта?',
       signup: 'Регистрация',
+      fillField: 'Заполните это поле',
     },
     logout: 'Выйти',
     notFound: {

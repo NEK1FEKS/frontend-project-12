@@ -39,6 +39,7 @@ const RenameChannel = ({ handleClose }) => {
     onSubmit: async ({ name }) => {
       try {
         await api.renameChannel({ name, id: channelId });
+        toast.success(t('channels.renamed'));
         handleClose();
       } catch (error) {
         console.error(error);
