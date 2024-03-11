@@ -2,14 +2,26 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { io } from 'socket.io-client';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 import init from './init.jsx';
+
+const rollbarConfig = {
+  accessToken: '158ec1301db4403e832699067bf7e906',
+  environment: 'testenv',
+};
 
 const app = async () => {
   const soket = io();
   const root = ReactDOM.createRoot(document.getElementById('chat'));
   const vdom = await init(soket);
-  root.render(vdom);
+  root.render(
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        {vdom}
+      </ErrorBoundary>
+    </RollbarProvider>,
+  );
 };
 
 app();
