@@ -7,7 +7,7 @@ import init from './init.jsx';
 
 const app = async () => {
   const soket = io();
-  const root = ReactDOM.createRoot(document.getElementById('root'));
+  const root = ReactDOM.createRoot(document.getElementById('chat'));
   const vdom = await init(soket);
   root.render(vdom);
 };
