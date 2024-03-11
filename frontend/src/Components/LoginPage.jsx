@@ -63,6 +63,7 @@ const LoginPage = () => {
                   <Form.Group>
                     <FloatingLabel
                       id="floatingUsername"
+                      controlId="login"
                       label={t('login.username')}
                       className="mb-3"
                     >
@@ -82,6 +83,7 @@ const LoginPage = () => {
                   <Form.Group>
                     <FloatingLabel
                       id="floationgPassword"
+                      controlId="password"
                       label={t('login.password')}
                       className="mb-4"
                     >
@@ -95,9 +97,12 @@ const LoginPage = () => {
                         required
                         isInvalid={authFailed}
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {t('login.authFailed')}
-                      </Form.Control.Feedback>
+                      <Form.Text
+                        controlId="password"
+                        className="text-danger"
+                      >
+                        {authFailed ? t('login.authFailed') : null}
+                      </Form.Text>
                     </FloatingLabel>
                   </Form.Group>
                   <Button variant="primary" type="submit">{t('login.submit')}</Button>

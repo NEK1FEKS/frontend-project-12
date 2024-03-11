@@ -1,6 +1,6 @@
 export default {
   translation: {
-    appName: 'Chat',
+    appName: 'Hexlet Chat',
     channels: {
       menu: 'Управление каналом',
       remove: 'Удалить',
