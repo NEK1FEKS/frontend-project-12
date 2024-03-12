@@ -39,11 +39,12 @@ const RenameChannel = ({ handleClose }) => {
     validationSchema,
     onSubmit: async ({ name }) => {
       try {
-        await api.renameChannel({ name, id: channelId });
+        await api.renameChannel({ id: channelId, name });
         toast.success(t('channels.renamed'));
         handleClose();
       } catch (error) {
         console.error(error);
+        toast.warning(t('errors.network'));
       }
     },
   });
@@ -63,9 +64,12 @@ const RenameChannel = ({ handleClose }) => {
               disabled={formik.isSubmitting}
               onChange={formik.handleChange}
               value={formik.values.name}
+              isInvalid={formik.errors.name && formik.touched.name}
               name="name"
               id="name"
             />
+            <label className="visually-hidden" htmlFor="name">{t('modals.channelName')}</label>
+            {formik.errors.name && formik.touched.name && <div className="text-danger">{t(formik.errors.name)}</div>}
             <div className="d-flex justify-content-end">
               <Button
                 className="me-2"
@@ -79,6 +83,7 @@ const RenameChannel = ({ handleClose }) => {
                 variant="primary"
                 type="submit"
                 disabled={formik.isSubmitting}
+                onClick={formik.handleSubmit}
               >
                 {t('modals.submit')}
               </Button>

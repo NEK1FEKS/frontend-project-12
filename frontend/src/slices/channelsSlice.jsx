@@ -28,8 +28,13 @@ const channelsSlice = createSlice({
     },
     renameChannel: (state, { payload }) => {
       const { channelId, channelName } = payload;
-      const channel = state.channels.filter(({ id }) => id === channelId);
-      channel.name = channelName;
+      const newChannels = state.channels.map((item) => {
+        if (item.id === channelId) {
+          item.name = channelName;
+        }
+        return item;
+      });
+      state.channels = newChannels;
     },
   },
 });
