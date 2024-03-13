@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { actions } from '../slices/index.js';
 
 const ChannelsSection = () => {
@@ -51,7 +52,7 @@ const ChannelsSection = () => {
                   onClick={() => handleSelectChannel(channel.id)}
                 >
                   <span className="me-1">#</span>
-                  {channel.name}
+                  {filter.clean(channel.name)}
                 </Button>
                 <Dropdown.Toggle
                   split

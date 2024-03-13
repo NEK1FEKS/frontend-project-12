@@ -22,7 +22,7 @@ $ make install
 ### Start
 
 ```
-$ make start
+$ make run
 ```
 
 ### Link:
