@@ -27,6 +27,4 @@ $ make start
 
 ### Link:
 
-```
 https://hexlet-chat-5zyp.onrender.com
-```
