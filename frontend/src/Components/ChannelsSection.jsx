@@ -4,57 +4,6 @@ import { actions } from '../slices/index.js';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-const Channel = (props) => {
-  const { t } = useTranslation();
-  const {
-    channel,
-    isCurrent,
-    handleSelectChannel,
-    handleRenameChannel,
-    handleRemoveChannel,
-  } = props;
-  const styles = isCurrent ? 'secondary' : null;
-
-  return (
-    <li className="nav-item w-100">
-      {channel.removable
-        ? (
-          <Dropdown as={ButtonGroup} className="d-flex">
-            <Button
-              type="button"
-              variant={styles}
-              key={channel.id}
-              className="w-100 rounded-0 text-start text-truncate"
-              onClick={() => handleSelectChannel(channel.id)}
-            >
-              <span className="me-1">#</span>
-              {channel.name}
-            </Button>
-            <Dropdown.Toggle split variant={styles} className="flex-grow-0">
-              <span className="visually-hidden">{t('channels.menu')}</span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleRemoveChannel(channel.id)}>{t('channels.remove')}</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleRenameChannel(channel.id)}>{t('channels.rename')}</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        )
-        : (
-          <Button
-            type="button"
-            variant={styles}
-            key={channel.id}
-            className="w-100 rounded-0 text-start text-truncate"
-            onClick={() => handleSelectChannel(channel.id)}
-          >
-            <span className="me-1">#</span>
-            {channel.name}
-          </Button>
-        )}
-    </li>
-  );
-};
-
 const ChannelsSection = () => {
   const { t } = useTranslation();
   const { channels, currentChannelId } = useSelector((state) => state.chatChannels);
@@ -91,16 +40,45 @@ const ChannelsSection = () => {
         </Button>
       </div>
       <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-        {channels.map((channel) => (
-          <Channel
-            key={channel.id}
-            channel={channel}
-            isCurrent={channel.id === currentChannelId}
-            handleSelectChannel={handleSelectChannel}
-            handleRemoveChannel={handleRemoveChannel}
-            handleRenameChannel={handleRenameChannel}
-          />
-        ))}
+      {channels.map((channel) => (channel.removable
+          ? (
+            <li key={channel.id} className="nav-item w-100">
+              <Dropdown as={ButtonGroup} className="d-flex">
+                <Button
+                  type="button"
+                  key={channel.id}
+                  className={`w-100 rounded-0 text-start ${currentChannelId === channel.id ? 'btn-secondary' : 'btn-light'} text-truncate`}
+                  onClick={() => handleSelectChannel(channel.id)}
+                >
+                  <span className="me-1">#</span>
+                  {channel.name}
+                </Button>
+                <Dropdown.Toggle
+                  split
+                  className={`flex-grow-0 ${currentChannelId === channel.id ? 'btn-secondary' : 'btn-light'}`}
+                >
+                  <span className="visually-hidden">{t('channels.menu')}</span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => handleRemoveChannel(channel.id)}>{t('channels.remove')}</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleRenameChannel(channel.id)}>{t('channels.rename')}</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </li>
+          )
+          : (
+            <li key={channel.id} className="nav-item w-100">
+              <Button
+                type="button"
+                key={channel.id}
+                className={`w-100 rounded-0 text-start ${currentChannelId === channel.id ? 'btn-secondary' : 'btn-light'} text-truncate`}
+                onClick={() => handleSelectChannel(channel.id)}
+              >
+                <span className="me-1">#</span>
+                {channel.name}
+              </Button>
+            </li>
+          ))) }
       </ul>
     </>
   );

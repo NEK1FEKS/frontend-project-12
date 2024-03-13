@@ -11,14 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-const getAuthHeader = () => {
-  const userToken = JSON.parse(localStorage.getItem('user'));
-  if (userToken) {
-    return { Authorization: `Bearer ${userToken}` };
-  }
-  return {};
-};
-
 const MainPage = () => {
   const { t } = useTranslation();
   const auth = useAuth();
@@ -28,7 +20,7 @@ const MainPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(routes.dataApiPath(), { headers: getAuthHeader() });
+        const { data } = await axios.get(routes.dataApiPath(), { headers: auth.getAuthHeader() });
         dispatch(ChannelsActions.setInitialState(data));
       } catch (error) {
         if (!error.isAxiosError) {

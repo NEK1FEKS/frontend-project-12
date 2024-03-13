@@ -6,7 +6,6 @@ import * as yup from 'yup';
 import { useApi } from '../../hooks/index.jsx';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-// import { actions } from '../slices/index.js';
 
 const getChannelsName = ({ chatChannels: { channels } }) => channels.map(({ name }) => name);
 

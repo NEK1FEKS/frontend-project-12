@@ -8,12 +8,13 @@ import Navbar from './Navbar.jsx';
 import ProviderAuth from './ProviderAuth.jsx';
 import SignupPage from './SignupPage.jsx';
 import { ToastContainer as ToastDiv } from 'react-toastify';
+import routes from '../routes.js';
 
 const CheckLogged = ({ children }) => {
   const auth = useAuth();
   const location = useLocation();
 
-  return auth.user ? children : <Navigate to="/login" state={{ from: location }} />;
+  return auth.user ? children : <Navigate to={routes.loginPagePath()} state={{ from: location }} />;
 };
 
 const App = () => (
@@ -23,15 +24,15 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
+            path={routes.chatPagePath()}
             element={(
               <CheckLogged>
                 <MainPage />
               </CheckLogged>
             )}
           />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignupPage />} />
+          <Route path={routes.loginPagePath()} element={<LoginPage />} />
+          <Route path={routes.signupPagePath()} element={<SignupPage />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
         <ToastDiv />

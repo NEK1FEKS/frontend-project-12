@@ -4,22 +4,31 @@ import { AuthContext } from '../contexts';
 const ProviderAuth = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem('user'));
   const [user, setUser] = useState(currentUser ? { username: currentUser.username } : null);
-
   const logIn = (userData) => {
     localStorage.setItem('user', JSON.stringify(userData.token));
     setUser({ username: userData.username });
   };
-
   const logOut = () => {
     localStorage.removeItem('user');
     setUser(null);
   };
 
-  const auth = useMemo(() => ({
+  const getAuthHeader = () => {
+    const userToken = JSON.parse(localStorage.getItem('user'));
+
+    if (userToken) {
+      return { Authorization: `Bearer ${userToken}` };
+    }
+
+    return {};
+  };
+
+  const auth = {
     logIn,
     logOut,
+    getAuthHeader,
     user,
-  }), [user]);
+  };
 
   return (
     <AuthContext.Provider value={auth}>
@@ -27,5 +36,4 @@ const ProviderAuth = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export default ProviderAuth;
+export default ProviderAuth; 
