@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, Form, InputGroup } from 'react-bootstrap';
-import { useAuth, useApi } from '../hooks/index.jsx';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
+import { useAuth, useApi } from '../hooks/index.jsx';
 
 const MessageForm = ({ channel }) => {
   const { t } = useTranslation();
@@ -97,11 +97,11 @@ const MessagesSection = () => {
       <div className="bg-light mb-4 p-3 shadow-sm small">
         <p className="m-0">
           <b>
-          {`# ${currentChannel?.name ?? t('channels.creatingChannel')}`}
+            {`# ${currentChannel?.name ?? t('channels.creatingChannel')}`}
           </b>
         </p>
         <span className="text-muted">
-        {`${channelMessages.length} ${t('chat.messageCount', { count: channelMessages.length })}`}
+          {`${channelMessages.length} ${t('chat.messageCount', { count: channelMessages.length })}`}
         </span>
       </div>
       <div id="message-box" className="chat-messages overflow-auto px-5 ">

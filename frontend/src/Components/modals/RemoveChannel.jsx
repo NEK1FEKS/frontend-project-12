@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal as ElModal, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useApi } from '../../hooks/index.jsx';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { useApi } from '../../hooks/index.jsx';
 
 const RemoveChannel = ({ handleClose }) => {
   const { t } = useTranslation();

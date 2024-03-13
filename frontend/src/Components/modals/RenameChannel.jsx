@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { Modal as ElModal, Button, Form } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useApi } from '../../hooks/index.jsx';
+import { Modal as ElModal, Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
+import { useApi } from '../../hooks/index.jsx';
 
 const getChannelsName = ({ chatChannels: { channels } }) => channels.map(({ name }) => name);
 

@@ -3,10 +3,10 @@ import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useAuth } from '../hooks/index.jsx';
-import routes from '../routes.js';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../hooks/index.jsx';
+import routes from '../routes.js';
 
 const SignupPage = () => {
   const { t } = useTranslation();

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Modal as ElModal, Button, Form } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useApi } from '../../hooks/index.jsx';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useApi } from '../../hooks/index.jsx';
 
 const getChannelsName = ({ chatChannels: { channels } }) => channels.map(({ name }) => name);
 
@@ -50,7 +50,7 @@ const AddChannel = ({ handleClose }) => {
   return (
     <>
       <ElModal.Header closeButton>
-      <ElModal.Title>{t('modals.add')}</ElModal.Title>
+        <ElModal.Title>{t('modals.add')}</ElModal.Title>
       </ElModal.Header>
       <ElModal.Body>
         <Form onSubmit={formik.handleSubmit}>

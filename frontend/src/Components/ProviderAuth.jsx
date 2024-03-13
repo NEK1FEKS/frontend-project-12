@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+/* eslint-disable react/jsx-no-constructed-context-values */
+import React, { useState } from 'react';
 import { AuthContext } from '../contexts';
 
 const ProviderAuth = ({ children }) => {
@@ -36,4 +37,4 @@ const ProviderAuth = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-export default ProviderAuth; 
+export default ProviderAuth;

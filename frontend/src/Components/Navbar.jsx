@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAuth } from '../hooks/index.jsx';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../hooks/index.jsx';
 
 const NavBar = () => {
   const { t } = useTranslation();

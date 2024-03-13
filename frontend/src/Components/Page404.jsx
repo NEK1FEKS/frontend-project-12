@@ -6,6 +6,6 @@ const Page404 = () => {
   return (
     <h1>{t('notFound.message')}</h1>
   );
-}
+};
 
 export default Page404;

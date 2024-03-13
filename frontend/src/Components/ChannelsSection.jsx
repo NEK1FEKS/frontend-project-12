@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { actions } from '../slices/index.js';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { actions } from '../slices/index.js';
 
 const ChannelsSection = () => {
   const { t } = useTranslation();
@@ -40,7 +40,7 @@ const ChannelsSection = () => {
         </Button>
       </div>
       <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-      {channels.map((channel) => (channel.removable
+        {channels.map((channel) => (channel.removable
           ? (
             <li key={channel.id} className="nav-item w-100">
               <Dropdown as={ButtonGroup} className="d-flex">

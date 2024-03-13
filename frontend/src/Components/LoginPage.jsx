@@ -4,9 +4,9 @@ import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks';
 import routes from '../routes.js';
-import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -110,7 +110,7 @@ const LoginPage = () => {
               </div>
               <div className="card-footer p-4">
                 <div className="text-center">
-                <span>{t('login.notAUser')}</span>
+                  <span>{t('login.notAUser')}</span>
                   {' '}
                   <a href="/signup">{t('login.signup')}</a>
                 </div>
