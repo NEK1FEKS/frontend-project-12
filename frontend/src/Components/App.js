@@ -1,5 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation, } from 'react-router-dom';
+import {
+  BrowserRouter, Routes, Route, Navigate, useLocation,
+} from 'react-router-dom';
+import { ToastContainer as ToastDiv } from 'react-toastify';
 import LoginPage from './LoginPage.jsx';
 import Page404 from './Page404.jsx';
 import MainPage from './MainPage.jsx';
@@ -7,7 +10,6 @@ import { useAuth } from '../hooks/index.jsx';
 import Navbar from './Navbar.jsx';
 import ProviderAuth from './ProviderAuth.jsx';
 import SignupPage from './SignupPage.jsx';
-import { ToastContainer as ToastDiv } from 'react-toastify';
 import routes from '../routes.js';
 
 const CheckLogged = ({ children }) => {
