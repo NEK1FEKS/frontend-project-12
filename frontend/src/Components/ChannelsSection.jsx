@@ -48,7 +48,8 @@ const ChannelsSection = () => {
                 <Button
                   type="button"
                   key={channel.id}
-                  className={`w-100 rounded-0 text-start ${currentChannelId === channel.id ? 'btn-secondary' : 'btn-light'} text-truncate`}
+                  variant={currentChannelId === channel.id ? 'secondary' : ''}
+                  className="w-100 rounded-0 text-start text-truncate"
                   onClick={() => handleSelectChannel(channel.id)}
                 >
                   <span className="me-1">#</span>
@@ -56,7 +57,8 @@ const ChannelsSection = () => {
                 </Button>
                 <Dropdown.Toggle
                   split
-                  className={`flex-grow-0 ${currentChannelId === channel.id ? 'btn-secondary' : 'btn-light'}`}
+                  variant={currentChannelId === channel.id ? 'secondary' : ''}
+                  className="flex-grow-0"
                 >
                   <span className="visually-hidden">{t('channels.menu')}</span>
                 </Dropdown.Toggle>
@@ -72,7 +74,8 @@ const ChannelsSection = () => {
               <Button
                 type="button"
                 key={channel.id}
-                className={`w-100 rounded-0 text-start ${currentChannelId === channel.id ? 'btn-secondary' : 'btn-light'} text-truncate`}
+                variant={currentChannelId === channel.id ? 'secondary' : ''}
+                className="w-100 rounded-0 text-start text-truncate"
                 onClick={() => handleSelectChannel(channel.id)}
               >
                 <span className="me-1">#</span>
