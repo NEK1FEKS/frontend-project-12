@@ -9,8 +9,16 @@ const ChannelsSection = () => {
   const { t } = useTranslation();
   const { channels, currentChannelId } = useSelector((state) => state.chatChannels);
   const dispatch = useDispatch();
-  const handleSelectChannel = (channelId) => {
+  const handleSelectChannel = (channelId, isRemovable) => {
     dispatch(actions.setCurrentChannel(channelId));
+    if (!isRemovable) {
+      const buttons = document.querySelectorAll('.w-100.rounded-0.text-start.text-truncate.btn');
+      buttons.forEach((button) => {
+        button.classList.remove('btn-secondary');
+      });
+      const selectedButton = document.querySelector(`[data-channel-id="${channelId}"]`);
+      selectedButton.classList.add('btn-secondary');
+    }
   };
 
   const handleAddChannel = () => {
@@ -50,7 +58,8 @@ const ChannelsSection = () => {
                   key={channel.id}
                   variant={currentChannelId === channel.id ? 'secondary' : ''}
                   className="w-100 rounded-0 text-start text-truncate"
-                  onClick={() => handleSelectChannel(channel.id)}
+                  onClick={() => handleSelectChannel(channel.id, channel.removable)}
+                  data-channel-id={channel.id}
                 >
                   <span className="me-1">#</span>
                   {filter.clean(channel.name)}
@@ -76,7 +85,8 @@ const ChannelsSection = () => {
                 key={channel.id}
                 variant={currentChannelId === channel.id ? 'secondary' : ''}
                 className="w-100 rounded-0 text-start text-truncate"
-                onClick={() => handleSelectChannel(channel.id)}
+                onClick={() => handleSelectChannel(channel.id, channel.removable)}
+                data-channel-id={channel.id}
               >
                 <span className="me-1">#</span>
                 {channel.name}
