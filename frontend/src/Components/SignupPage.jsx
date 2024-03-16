@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -13,6 +13,7 @@ const SignupPage = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const [isSubmitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -46,13 +47,14 @@ const SignupPage = () => {
         );
         auth.logIn(data);
         navigate(routes.chatPagePath());
-      } catch (error) {
-        if (error.response.status === 409) {
-          setSubmitting(true);
+      } catch (err) {
+        if (err.response.status === 409) {
+          setError(t('signup.notUniq'));
+          setSubmitting(false);
           inputRef.current.select();
           return;
         }
-        console.error(error.message);
+        console.error(err.message);
       }
     },
   });
@@ -71,6 +73,7 @@ const SignupPage = () => {
               </div>
               <Form onSubmit={formik.handleSubmit} className="w-50">
                 <h1 className="text-center mb-4">{t('signup.header')}</h1>
+                {error && <Alert variant="danger">{error}</Alert>}
                 <Form.Group className="form-floating mb-3">
                   <Form.Control
                     type="text"

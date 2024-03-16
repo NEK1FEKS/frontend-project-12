@@ -18,6 +18,10 @@ const ChannelsSection = () => {
   };
   const handleRemoveChannel = (channelId) => {
     dispatch(actions.openModal({ modalType: 'removeChannel', id: channelId }));
+    if (currentChannelId === channelId) {
+      const generalChannel = channels.find((channel) => channel.name === 'general');
+      handleSelectChannel(generalChannel.id);
+    }
   };
   const handleRenameChannel = (channelId) => {
     dispatch(actions.openModal({ modalType: 'renameChannel', id: channelId }));

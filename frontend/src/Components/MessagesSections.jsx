@@ -21,9 +21,6 @@ const MessageForm = ({ channel }) => {
   });
 
   const inputRef = useRef();
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -47,6 +44,10 @@ const MessageForm = ({ channel }) => {
     },
   });
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [channel, formik.values.body]);
+
   const isInvalid = !formik.dirty || !formik.isValid;
 
   return (
@@ -61,6 +62,7 @@ const MessageForm = ({ channel }) => {
           value={formik.values.body}
           className="border-0 p-0 ps-2"
           placeholder={t('chat.placeholder')}
+          autoFocus
         />
         <Button type="submit" variant="group-vertical" disabled={isInvalid}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-square" viewBox="0 0 16 16">
