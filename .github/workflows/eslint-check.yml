@@ -1,4 +1,4 @@
-name: ESLint Check
+name: eslint-check
 
 on: [push]
 
