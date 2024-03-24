@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { useAuth, useApi } from '../hooks/index.jsx';
 
-const MessageForm = ({ channel }) => {
+const MessageForm = ({ channel, channelMessages }) => {
   const { t } = useTranslation();
   const api = useApi();
   const { user } = useAuth();
@@ -21,6 +21,7 @@ const MessageForm = ({ channel }) => {
   });
 
   const inputRef = useRef();
+  const [isScrolledToBottom, setIsScrolledToBottom] = useState(true);
 
   const formik = useFormik({
     initialValues: {
@@ -47,6 +48,34 @@ const MessageForm = ({ channel }) => {
   useEffect(() => {
     inputRef.current?.focus();
   }, [channel, formik.values.body]);
+
+  useEffect(() => {
+    const messageBox = document.getElementById('message-box');
+    if (messageBox && isScrolledToBottom) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+    }
+  }, [channelMessages, isScrolledToBottom]);
+
+  const handleScroll = () => {
+    const messageBox = document.getElementById('message-box');
+    if (messageBox) {
+      setIsScrolledToBottom(messageBox.scrollHeight - messageBox.scrollTop
+        === messageBox.clientHeight);
+    }
+  };
+
+  useEffect(() => {
+    const messageBox = document.getElementById('message-box');
+    if (messageBox) {
+      messageBox.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (messageBox) {
+        messageBox.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
 
   const isInvalid = !formik.dirty || !formik.isValid;
 
@@ -116,7 +145,7 @@ const MessagesSection = () => {
         ))}
       </div>
       <div className="mt-auto px-5 py-3">
-        <MessageForm channel={currentChannel} />
+        <MessageForm channel={currentChannel} channelMessages={channelMessages} />
       </div>
     </div>
   );

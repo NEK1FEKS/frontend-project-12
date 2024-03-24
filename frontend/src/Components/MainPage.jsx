@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -16,6 +16,10 @@ const MainPage = () => {
   const auth = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const channels = useSelector((state) => state.chatChannels.channels);
+  const currentChannelId = useSelector((state) => state.chatChannels.currentChannelId);
+
+  const [localCurrentChannelId, setLocalCurrentChannelId] = useState(currentChannelId);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +42,21 @@ const MainPage = () => {
     fetchData();
   }, [dispatch, auth, navigate, t]);
 
+  useEffect(() => {
+    const generalChannel = channels.find((channel) => channel.name === 'general');
+    if (generalChannel && localCurrentChannelId !== currentChannelId
+      && !channels.find((channel) => channel.id === currentChannelId)) {
+      dispatch(ChannelsActions.setCurrentChannel(generalChannel.id));
+      setLocalCurrentChannelId(generalChannel.id);
+    }
+  }, [dispatch, channels, currentChannelId, localCurrentChannelId]);
+
+  useEffect(() => {
+    const messageBox = document.getElementById('message-box');
+    if (messageBox) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+    }
+  }, [currentChannelId]);
   return (
     <>
       <Modal />
