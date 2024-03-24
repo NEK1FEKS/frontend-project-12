@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { actions } from '../slices/index.js';
+import { actions as ChannelsActions } from '../slices/channelsSlice.jsx';
 
 const ChannelsSection = () => {
   const { t } = useTranslation();
   const { channels, currentChannelId } = useSelector((state) => state.chatChannels);
   const dispatch = useDispatch();
+  const [localCurrentChannelId, setLocalCurrentChannelId] = useState(currentChannelId);
+
+  useEffect(() => {
+    const generalChannel = channels.find((channel) => channel.name === 'general');
+    if (generalChannel && localCurrentChannelId !== currentChannelId
+      && !channels.find((channel) => channel.id === currentChannelId)) {
+      dispatch(ChannelsActions.setCurrentChannel(generalChannel.id));
+      setLocalCurrentChannelId(generalChannel.id);
+    }
+  }, [dispatch, channels, currentChannelId, localCurrentChannelId]);
 
   const handleSelectChannel = (channelId) => {
     dispatch(actions.setCurrentChannel(channelId));
@@ -22,7 +33,6 @@ const ChannelsSection = () => {
   const handleRenameChannel = (channelId) => {
     dispatch(actions.openModal({ modalType: 'renameChannel', id: channelId }));
   };
-
   return (
     <>
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
