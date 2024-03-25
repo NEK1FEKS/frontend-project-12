@@ -33,6 +33,10 @@ const init = async (socket) => {
     store.dispatch(actions.addChannel({ channel: payload }));
     if (createdBy === socket.id) {
       store.dispatch(actions.setCurrentChannel(payload.id));
+      requestAnimationFrame(() => {
+        const channelsBox = document.getElementById('channels-box');
+        channelsBox.scrollTop = channelsBox.scrollHeight - channelsBox.clientHeight;
+      });
     }
   });
   socket.on('removeChannel', (payload) => {

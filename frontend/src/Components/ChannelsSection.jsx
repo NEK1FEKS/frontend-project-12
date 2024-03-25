@@ -16,6 +16,8 @@ const ChannelsSection = () => {
     const generalChannel = channels.find((channel) => channel.name === 'general');
     if (generalChannel && localCurrentChannelId !== currentChannelId
       && !channels.find((channel) => channel.id === currentChannelId)) {
+      const channelsBox = document.getElementById('channels-box');
+      channelsBox.scrollTop = '0';
       dispatch(ChannelsActions.setCurrentChannel(generalChannel.id));
       setLocalCurrentChannelId(generalChannel.id);
     }
