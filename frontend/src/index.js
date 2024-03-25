@@ -3,11 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { io } from 'socket.io-client';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-
 import init from './init.jsx';
 
 const rollbarConfig = {
-  accessToken: '158ec1301db4403e832699067bf7e906',
+  accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
   environment: 'testenv',
 };
 
